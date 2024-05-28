@@ -50,8 +50,20 @@ class _AlbumContentState extends State<AlbumContent> {
       child: BlocBuilder<AlbumBloc, AlbumState>(
         builder: (context, state) {
           if (state is AlbumInitial) {
-            return const Center(
-              child: Text("Please turn on network and pull to refresh."),
+            return Center(
+              child: Column(
+                children: [
+                  const Text("Please turn on network and refresh."),
+                  IconButton(
+                      onPressed: () {
+                        BlocProvider.of<ProfileBloc>(context)
+                            .add(ProfileFetchEvent(id: defaultUserId));
+                        BlocProvider.of<AlbumBloc>(context)
+                            .add(AlbumFetchEvent(userId: defaultUserId));
+                      },
+                      icon: const Icon(Icons.refresh))
+                ],
+              ),
             );
           }
           return GridView.builder(

@@ -22,15 +22,18 @@ class _ProfilePicState extends State<ProfilePic> {
       onTap: () async {
         ImageSource? source = await showModalBottomSheet<ImageSource>(
           context: context,
+          showDragHandle: true,
           builder: (context) => Padding(
             padding: const EdgeInsets.all(kDefaultAllSidePadding),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
                   "Pick image from",
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     FilledButton(
                       onPressed: () =>

@@ -50,7 +50,7 @@ class _PostsContentState extends State<PostsContent> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
+    return RefreshIndicator.adaptive(
       onRefresh: () async {
         BlocProvider.of<ProfileBloc>(context)
             .add(ProfileFetchEvent(id: defaultUserId));
@@ -92,8 +92,20 @@ class _PostsContentState extends State<PostsContent> {
               },
             );
           }
-          return const Center(
-            child: Text("Please turn on network and pull to refresh."),
+          return Center(
+            child: Column(
+              children: [
+                const Text("Please turn on network and refresh."),
+                IconButton(
+                    onPressed: () {
+                      BlocProvider.of<ProfileBloc>(context)
+                          .add(ProfileFetchEvent(id: defaultUserId));
+                      BlocProvider.of<PostsBloc>(context)
+                          .add(PostsFetchEvent(userId: defaultUserId));
+                    },
+                    icon: const Icon(Icons.refresh))
+              ],
+            ),
           );
         },
       ),
